@@ -5,21 +5,27 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var connect = require('connect-mongo');
+var session = require('express-session');
+var ConnectMongo = require('connect-mongo')(session);
 var passport = require('passport');
-var favicon = require('serve-favicon');
+var flash = require('connect-flash');
 
-var index = require('./router');
+var index = require('./route');
+// var users = require('./routes/users');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, './server/views'));
+app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'ejs');
 
+var DBconfig = require('./server/config/mongo.js');
+mongoose.connect(DBconfig.url);
+mongoose.connection.on('error', function() {
+  console.error('MongoDB Connection Error. Make sure MongoDB is running');
+});
 
-
-
+// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.jpg')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -27,7 +33,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+require('./server/config/passport')(passport);
+app.use(session({
+  secret:'some text go here',
+  saveUninitialized: true,
+  resave: true,
+  store: new ConnectMongo({
+    url : DBconfig.url,
+    collection: 'sessions'
+  })
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 app.use('/', index);
+// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,13 +65,13 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error',{ title:'Error' });
+  res.render('error');
 });
 
 module.exports = app;
 
 // 서버 실행
 app.set('port', process.env.PORT || 3000);
-var server = app.listen(app.get('port'), () => {
+var server = app.listen(app.get('port'), function() {
   console.log('coin 가즈아~ : ' + server.address().port);
 });

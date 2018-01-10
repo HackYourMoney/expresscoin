@@ -2,10 +2,10 @@
 <html>
 <head>
   <link rel='stylesheet' href='../../public/stylesheets/style.css'/>
-  <title><%= title %></title>
 </head>
 <body>
-  <h1><%= message %></h1>
+  <% include header %>
+  <h1>error Message : <%= message %></h1>
   <h2><%= error.status %></h2>
   <pre><%= error.stack %></pre>
 </body>
