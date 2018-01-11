@@ -20,7 +20,7 @@ var app = express();
 
 
 // view engine setup
-app.set('views', path.join(__dirname, './server/views'));
+app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'ejs');
 
 // 몽고 db 설정 
@@ -64,7 +64,22 @@ app.use(passport.session());
 app.use(flash());
 
 
+require('./server/config/passport')(passport);
+app.use(session({
+  secret:'some text go here',
+  saveUninitialized: true,
+  resave: true,
+  store: new ConnectMongo({
+    url : DBconfig.url,
+    collection: 'sessions'
+  })
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 app.use('/', index);
+// app.use('/users', users);
 
 
 // catch 404 and forward to error handler
@@ -82,13 +97,13 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error',{ title:'Error' });
+  res.render('error');
 });
 
 module.exports = app;
 
 // 서버 실행
 app.set('port', process.env.PORT || 3000);
-var server = app.listen(app.get('port'), () => {
+var server = app.listen(app.get('port'), function() {
   console.log('coin 가즈아~ : ' + server.address().port);
 });

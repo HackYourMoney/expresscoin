@@ -31,6 +31,8 @@ Root
     * login   
     * SignUp    
     * error   
+    * header    
+    * profile   
 * router.js   
 * app.js    
 * Package.json    

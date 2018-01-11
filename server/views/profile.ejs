@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <% include header %>
+  <div class="container">
+    <h1><%= title %></h1>
+    <div class="details">
+      <div class="card text-xs-center">
+        <br>
+        <div class="card-block">
+          <h4 class="card-title">User Details</h4>
+          <p class="card-text">
+            <strong>Name</strong>: <%= user.local.name %><br>
+            <strong>Email</strong>: <%= user.local.email %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

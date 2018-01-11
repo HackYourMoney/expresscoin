@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
   <link rel="stylesheet" href="../../public/stylesheets/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
 </head>
 <body>
 <a class="" href="/">HOME</a>
 <ul class="">
   <li class="">
-    <a class="" href="/signup">회원 가입</a>
+    <a class="btn btn-default" href="/signup">회원 가입</a>
+  </li>
+  <%# if (!session.user) { %>
+  <li class="">
+    <a class="btn btn-default" href="/login">로그인</a>
+  </li>
+  <%# } else { %>
+  <li class="">
+    <a class="btn btn-default" href="/profile">정보</a>
   </li>
   <li class="">
-    <a class="" href="/login">로그인</a>
+    <a class="btn btn-default" href="/logout">로그아웃</a>
   </li>
-  <li class="">
-    <a class="" href="/signout">로그아웃</a>
-  </li>
+  <%# } %>
 </ul>
 </body>
 </html>
