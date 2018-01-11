@@ -4,7 +4,7 @@ var passport = require('passport');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Coin 가입' });
+  res.render('index', { title: 'Coin 가입'});
 });
 
 // Get Login
@@ -34,6 +34,7 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
   res.render('profile', {title: 'profile', user : req.user});
 });
 
+// 로그인 여부 확인
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated())
     return next();

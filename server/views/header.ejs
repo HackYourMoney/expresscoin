@@ -12,15 +12,18 @@
   <li class="">
     <a class="btn btn-default" href="/signup">회원 가입</a>
   </li>
+  <%# if (!session.user) { %>
   <li class="">
     <a class="btn btn-default" href="/login">로그인</a>
   </li>
+  <%# } else { %>
   <li class="">
     <a class="btn btn-default" href="/profile">정보</a>
   </li>
   <li class="">
     <a class="btn btn-default" href="/logout">로그아웃</a>
   </li>
+  <%# } %>
 </ul>
 </body>
 </html>
