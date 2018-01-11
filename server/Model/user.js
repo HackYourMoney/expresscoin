@@ -1,28 +1,20 @@
+// 몽고 디비 연결 
 var mongoose = require('mongoose');
+// 암호화 모듈 생성 
 var bcrypt = require('bcrypt-nodejs');
-
+// 유저 스키마 만들기 
 var userSchema = mongoose.Schema({
-  local : {
-  username : String,
-  password : String,
-  email : String
-  }
+    local: {
+        email: String,
+        password: String
+    }
+
 });
-
-// 비밀번호 암호화
+// 유저 암호화 모듈 메소드 
 userSchema.methods.generateHash = function(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
-
-// 비밀번호 유효성 확인
 userSchema.methods.validPassword = function(password) {
-  return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.local.password);
 };
-
-module.exports = mongoose.model('CoinUser'. userSchema);
-
-// module.exports = mongoose.model('CoinUser', mongoose.Schema({
-//   username : String,
-//   password : String,
-//   email : String
-// }));
+module.exports = mongoose.model('User', userSchema);
