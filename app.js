@@ -64,20 +64,6 @@ app.use(passport.session());
 app.use(flash());
 
 
-require('./server/config/passport')(passport);
-app.use(session({
-  secret:'some text go here',
-  saveUninitialized: true,
-  resave: true,
-  store: new ConnectMongo({
-    url : DBconfig.url,
-    collection: 'sessions'
-  })
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
 app.use('/', index);
 // app.use('/users', users);
 
