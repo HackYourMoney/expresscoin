@@ -12,16 +12,19 @@ router.get('/',home.signin, function(req, res, next) {
   res.render('index', { title: 'Expresscoin'});
 });
 
+router.get('/header',home.signin, function(req, res, next) {
+  res.render('index', { title: 'Expresscoin'});
+});
 
 // soomin add //
 // 로그인 페이지 이동
 router.get('/login',home.signin,function(req, res, next) {
-  res.render('login', { header: '로그인 페이지', message: req.flash('loginMessage'),user : ' ' });
+  res.render('login', { header: '로그인 페이지', message: req.flash('loginMessage'),user : req.user });
 });
 
 // 회원가입 페이지 이동
 router.get('/signup',home.signin,function(req, res, next) {
-  res.render('signup', { header: '회원가입', message: req.flash('signupMessage'),user : ' ' });
+  res.render('signup', { header: '회원가입', message: req.flash('signupMessage'),user : req.user });
 });
 
 // 로그인 
