@@ -1,29 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../public/stylesheets/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-</head>
-<body>
-<a class="" href="/">HOME</a>
-<ul class="">
-  <li class="">
+<title>main</title>
+<div class="header">
+  <% if (!user) { %>
     <a class="btn btn-default" href="/signup">회원 가입</a>
-  </li>
-  <%# if (!session.user) { %>
-  <li class="">
     <a class="btn btn-default" href="/login">로그인</a>
-  </li>
-  <%# } else { %>
-  <li class="">
-    <a class="btn btn-default" href="/profile">정보</a>
-  </li>
-  <li class="">
+  <% } else { %>
+    <i class="btn btn-default"> <%= user.local.email %> 님 환영합니다 </i>
     <a class="btn btn-default" href="/logout">로그아웃</a>
-  </li>
-  <%# } %>
-</ul>
-</body>
-</html>
+  <% } %>
+</div>
+
+<style>
+.header{
+  display: flex;
+  justify-content: flex-end
+}
+</style>
