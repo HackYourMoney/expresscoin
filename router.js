@@ -1,5 +1,6 @@
 var express = require('express');
 var passport = require('passport');
+var session = require('express-session');
 
 var users = require('./server/controller/user');
 var home = require('./server/controller/home');

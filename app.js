@@ -4,9 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var index = require('./router');
-
 var mongoose = require('mongoose');
 var passport = require('passport');
 // mongo 관련 모듈 추가
