@@ -15,8 +15,6 @@ var flash = require("connect-flash");
 
 var app = express();
 
-var index = require('./router');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'ejs');

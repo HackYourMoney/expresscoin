@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ./StyleSheet/stylesheet %>
+  <% include ./stylesheet/stylesheet %>
 </head>
 <body>
   <% include header %>
-  <div>
-    <button onclick="notifyMe()">Notify me!</button>
+  <div class="container">
+    <div class="details">
+      <div class="card text-xs-center">
+        <br>
+        <div class="card-block">
+          <h4 class="card-title">User Details</h4>
+          <p class="card-text">
+            <button onclick="notifyMe()">Notify me!</button>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
@@ -22,7 +32,7 @@
     else if (Notification.permission === "granted") {
       // If it's okay let's create a notification
       var msg={
-        body: "aptpsl"
+          body: "aptpsl"
       }
       var notification = new Notification("예약 요청이 들어왔습니다", msg);
     }

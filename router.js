@@ -4,31 +4,31 @@ var session = require('express-session');
 
 var users = require('./server/controller/user');
 var home = require('./server/controller/home');
-// var usercoin = require('./sever/controller/UserCoin');
+var usercoin = require('./server/controller/UserCoin');
 
+var session = require('express-session');
 var router = express.Router();
 
-/* GET home page. */
+// GET home page.
 router.get('/',home.signin, function(req, res, next) {
-  res.render('index', { title: 'Expresscoin'});
+  res.render('index', { title: 'Expresscoin', user: req.user });
 });
 
-// soomin add //
 // Get Login
 router.get('/login',home.signin,function(req, res, next) {
-  res.render('login', { header: '로그인 페이지', message: req.flash('loginMessage'),user : req.user });
+  res.render('login', { title: '로그인', message: req.flash('loginMessage'),user : req.user });
 });
+// Get SignUp
+router.get('/signup',home.signin,function(req, res, next) {
+  res.render('signup', { title: '회원가입', message: req.flash('signupMessage'),user : req.user });
+});
+
 // Post Login
 router.post('/login',passport.authenticate('login', {
   successRedirect : '/profile',
   failureRedirect : '/login',
   failureFlash : true,
 }));
-
-// Get SignUp
-router.get('/signup',home.signin,function(req, res, next) {
-  res.render('signup', { header: '회원가입', message: req.flash('signupMessage'),user : req.user });
-});
 // Post SignUp
 router.post('/signup',passport.authenticate('signup', {
   successRedirect : '/login',
@@ -36,9 +36,9 @@ router.post('/signup',passport.authenticate('signup', {
   failureFlash : true,
 }));
 
-// Profile
+// profile
 router.get('/profile', home.isLoggedIn, function(req, res, next) {
-  res.render('profile', { header: '존버코인', user : req.user });
+  res.render('profile', { user : req.user });
 });
 
 // Logout

@@ -5,20 +5,20 @@
 </head>
 <body>
   <% include header %>
-  <% if (message.length > 0) { %>
+  <div class="container">
+    <% if (message.length > 0) { %>
     <div class="alert alert-warning alert-dismissible fade in" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
       <strong>Ohps!</strong> <%= message %>
     </div>
-  <% } %>
-  <div class="container">
+    <% } %>
     <form action="/signup" method="post">
-      <h2><%= header %></h2>
+      <h2><%= title %></h2>
       <p>
         <label>이메일</label>
-        <input type="email" id="email" name="email" class="form-control box-margin" placeholder="이메일 주소" required="">
+        <input type="email" id="email" name="email" class="form-control box-margin" placeholder="이메일" required="">
       </p>
       <p>
         <label>비밀번호</label>
