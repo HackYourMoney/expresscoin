@@ -4,30 +4,29 @@
   <% include ./stylesheet/stylesheet %>
 </head>
 <body>
-  <% if (message.length > 0) { %>
-      <div class="alert alert-warning alert-dismissible fade in" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-          <strong>Ohps!</strong> <%= message %>
-      </div>
-  <% } %>
+  <% include header %>
   <div class="container">
- 
+    <% if (message.length > 0) { %>
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Ohps!</strong> <%= message %>
+    </div>
+    <% } %>
     <form action="/signup" method="post">
-      <h2><%= header %></h2>
+      <h2><%= title %></h2>
       <p>
-        <label>Email address</label>
-        <input type="email" id="email" name="email" class="form-control box-margin" placeholder="Email address" required="">
+        <label>이메일</label>
+        <input type="email" id="email" name="email" class="form-control box-margin" placeholder="이메일" required="">
       </p>
       <p>
-        <label>Password</label>
-        <input type="password" id="password" name="password" class="form-control box-margin" placeholder="Password" required="">
+        <label>비밀번호</label>
+        <input type="password" id="password" name="password" class="form-control box-margin" placeholder="비밀번호" required="">
       </p>
-      <button class="btn btn-lg btn-primary btn-block  box-margin" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block  box-margin" type="submit">회원가입</button>
       <br>
     </form>
   </div>
 </body>
 </html>
-

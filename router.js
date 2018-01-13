@@ -1,46 +1,46 @@
 var express = require('express');
-
 var passport = require('passport');
 
 var users = require('./server/controller/user');
 var home = require('./server/controller/home');
+var usercoin = require('./server/controller/UserCoin');
+
 var session = require('express-session');
 var router = express.Router();
 
-/* GET home page. */
+// GET home page.
 router.get('/',home.signin, function(req, res, next) {
-  res.render('index', { title: 'Expresscoin'});
+  res.render('index', { title: 'Expresscoin', user: req.user });
 });
 
-// soomin add //
-// 로그인 페이지 이동
+// Get Login
 router.get('/login',home.signin,function(req, res, next) {
-  res.render('login', { header: '로그인 페이지', message: req.flash('loginMessage'),user : req.user });
+  res.render('login', { title: '로그인', message: req.flash('loginMessage'),user : req.user });
 });
-
-// 회원가입 페이지 이동
+// Get SignUp
 router.get('/signup',home.signin,function(req, res, next) {
-  res.render('signup', { header: '회원가입', message: req.flash('signupMessage'),user : req.user });
+  res.render('signup', { title: '회원가입', message: req.flash('signupMessage'),user : req.user });
 });
 
-// 로그인 
+// Post Login
 router.post('/login',passport.authenticate('login', {
-  successRedirect : '/main', 
-  failureRedirect : '/login', //로그인 실패시 redirect할 url주소
+  successRedirect : '/profile',
+  failureRedirect : '/login',
   failureFlash : true,
 }));
-// 회원가입 데이터 등록
+// Post SignUp
 router.post('/signup',passport.authenticate('signup', {
-  successRedirect : '/login', 
-  failureRedirect : '/signup', //로그인 실패시 redirect할 url주소
+  successRedirect : '/login',
+  failureRedirect : '/signup',
   failureFlash : true,
 }));
-// 로그인 
-router.get('/main', home.isLoggedIn, function(req, res, next) {
-  res.render('main', { header: '존버코인', user : req.user });
+
+// profile
+router.get('/profile', home.isLoggedIn, function(req, res, next) {
+  res.render('profile', { user : req.user });
 });
 
-// 로그아웃
+// Logout
 router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
