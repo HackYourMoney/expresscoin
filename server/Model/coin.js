@@ -3,6 +3,7 @@
 //
 // var usercoinSchema = mongoose.Schema({
 //   local: {
+// 
 //   }
 // });
 //
