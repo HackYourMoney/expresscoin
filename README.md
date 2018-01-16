@@ -38,3 +38,7 @@ Root
 * Package.json    
 
 ## **변경사항 생기면 그때 그때 push 및 commit!!**
+
+> 참조    
+[MongoDB 자료형](https://www.tutorialspoint.com/mongodb/mongodb_datatype.htm)    
+[Mongoose Schema Data Type](http://mongoosejs.com/docs/guide.html)

@@ -2,21 +2,59 @@
 <html>
 <head>
   <% include ./stylesheet/stylesheet %>
+  <title>내 코인정보</title>
 </head>
 <body>
   <% include header %>
   <div class="container">
-    <div class="details">
-      <div class="card text-xs-center">
-        <br>
-        <div class="card-block">
-          <h4 class="card-title">User Details</h4>
-          <p class="card-text">
-            <button onclick="notifyMe()">Notify me!</button>
-          </p>
-        </div>
+    <div class="card text-xs-center">
+      <br>
+      <div class="card-block">
+        <h4 class="card-title">회원정보</h4>
+        <p class="card-text">
+          <button onclick="notifyMe()">알람</button>
+        </p>
       </div>
     </div>
+    <div class="details">
+    <% if(coins.length>0) { %>
+      <table class="list-table">
+      <caption>코인 가즈아!!</caption>
+        <thead>
+          <th>거래소</th>
+          <th>코인이름</th>
+          <th>구매가격</th>
+          <th>입금액</th>
+          <th>현재가격</th>
+          <th>현재총액</th>
+          <th>차액</th>
+          <th>수익률(%)</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <% for(var i=0;i<coins.length;i++) { %>
+          <tr>
+            <td><%= coins[i].exchange %></td>
+            <td><a href="/coinRead/<%= coins[i]._id%>"><%= coins[i].coinname %></a></td>
+            <td><%= coins[i].purchase %></td>
+            <td><%= coins[i].deposit %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <div>등록된 코인이 없습니다</div>
+    <% } %>
+    </div>
+    <div class="result">
+      <ul>
+        <li><span>입금 총액 : <%= totalInput %></span></li>
+        <li><span>현재 총액 : <%= totalNow %></span></li>
+        <li><span>순수익 : <%= getMoney %></span></li>
+        <li><span>수익율(%) : <%= getMoneyRate %></span></li>
+      </ul>
+    </div>
+    <a href="/coinRegister" class="button">코인등록</a>
   </div>
 </body>
 </html>

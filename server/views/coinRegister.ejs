@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ./stylesheet/stylesheet %>
+  <title>코인 등록</title>
+</head>
+<body>
+  <% include header %>
+  <div class="container">
+    <h3><a href="/profile">전체 보기</a></h3>
+    <h1>코인 등록</h1>
+    <form action="/save" method="post">
+      <table>
+        <tbody>
+          <tr>
+            <td>거래소</td>
+            <td>
+              <select name="exchange">
+                <option value="bitthumb">빗썸</option>
+                <option value="Upbit">업비트</option>
+                <option value="coinNest">코인네스트</option>
+                <option value="coinOne">코인원</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>코인명</td>
+            <td><input type="text" name="coinname" placeholder="살 코인"></td>
+          </tr>
+          <tr>
+            <td>구매가</td>
+            <td><input type="number" name="purchase" placeholder="구매 단가"></td>
+          </tr>
+          <tr>
+            <td>입금액</td>
+            <td><input type="number" name="deposit" placeholder="입금액"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><button type="submit">등록</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</body>
+</html>
