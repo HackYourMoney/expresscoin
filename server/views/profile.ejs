@@ -18,7 +18,7 @@
     </div>
     <div class="details">
     <% if(coins.length>0) { %>
-      <table class="list-table">
+      <table class="list-table" id="cointable">
       <caption>코인 가즈아!!</caption>
         <thead>
           <th>거래소</th>
@@ -37,7 +37,7 @@
             <td><%= coins[i].exchange %></td>
             <td><a href="/coinRead/<%= coins[i]._id%>"><%= coins[i].coinname %></a></td>
             <td><%= coins[i].purchase %></td>
-            <td><%= coins[i].deposit %></td>
+            <td id="totalcoin"><%= coins[i].deposit %></td>
           </tr>
           <% } %>
         </tbody>
@@ -48,10 +48,10 @@
     </div>
     <div class="result">
       <ul>
-        <li><span>입금 총액 : <%= totalInput %></span></li>
-        <li><span>현재 총액 : <%= totalNow %></span></li>
-        <li><span>순수익 : <%= getMoney %></span></li>
-        <li><span>수익율(%) : <%= getMoneyRate %></span></li>
+        <li>입금 총액 : <span id="totalInput"><%#= totalInput %></span></li>
+        <li>현재 총액 : <span id="totalNow"><%#= totalNow %></span></li>
+        <li>순수익 : <span id="getMoney"><%#= getMoney %></span></li>
+        <li>수익율(%) : <span id="getMoneyRate"><%#= getMoneyRate %></span></li>
       </ul>
     </div>
     <a href="/coinRegister" class="button">코인등록</a>
@@ -99,4 +99,23 @@
     console.log(theBody,theIcon,theTitle);
     var n = new Notification(theTitle,options);
   }
+
+  // 입금 총액
+  var totalInput = 0;
+  for (var i=1;i<document.getElementById('cointable').rows.length;i++) {
+    totalInput += parseInt(document.getElementById("totalcoin").innerHTML);
+  }
+  document.getElementById("totalInput").innerHTML = totalInput;
+
+  // 현재 총액 : API 반영 예정
+  var totalNow = 0;
+  document.getElementById("totalNow").innerHTML = totalNow;
+
+  // 순 수익
+  var getMoney = totalNow - totalInput;
+  document.getElementById("getMoney").innerHTML = getMoney;
+
+  // 수익률
+  var getMoneyRate = getMoney/100;
+  document.getElementById("getMoneyRate").innerHTML = getMoneyRate;
 </script>
