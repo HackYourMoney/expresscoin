@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ./stylesheet %>
+  <% include ./StyleSheet/stylesheet %>
 </head>
 <body>
-  <% include ./header %>
+  <% include header %>
   <div class="container">
     <% if (message.length > 0) { %>
-      <div class="alert alert-warning alert-dismissible fade in" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-          <strong>Ohps!</strong> <%= message %>.
-      </div>
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Ohps!</strong> <%= message %>
+    </div>
     <% } %>
+    <h2><%= title %></h2>
     <div class="login-form">
       <form action="/login" method="post">
-        <label>Email address</label>
-        <input type="email" id="email" name="email" class="form-control box-margin" placeholder="Email address" required="">
-        <label for="inputPassword">Password</label>
-        <input type="password" id="password" name="password" class="form-control box-margin" placeholder="Password" required="">
-        <button  class="btn btn-lg btn-primary btn-block form-control box-margin" type="submit">LOGIN</button>
+        <label>이메일</label>
+        <input type="email" id="email" name="email" class="form-control box-margin" placeholder="이메일" required="">
+        <label for="inputPassword">비밀번호</label>
+        <input type="password" id="password" name="password" class="form-control box-margin" placeholder="비밀번호" required="">
+        <button class="btn btn-lg btn-primary btn-block form-control box-margin" type="submit">로그인</button>
       </form>
-      <p>Don't have an account? <a href="/signup">Signup</a> ,it's free.</p>
-    </div>    
+      <p>계정이 없으신가요?</p><a href="/signup">회원가입</a>
+    </div>
   </div>
 </body>
 </html>
-<style>
-
-</style>

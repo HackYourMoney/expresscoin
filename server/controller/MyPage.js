@@ -1,5 +1,3 @@
-//importScripts('/Users/jaeuk-mac/Documents/web_project/express_coin/cache-polyfill/index.js');
-
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -11,4 +9,3 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-

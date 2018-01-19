@@ -1,4 +1,4 @@
-<title>main</title>
+<% include ./StyleSheet/stylesheet %>
 <div class="header">
   <% if (!user) { %>
     <a class="btn btn-default" href="/signup">회원 가입</a>
@@ -8,10 +8,3 @@
     <a class="btn btn-default" href="/logout">로그아웃</a>
   <% } %>
 </div>
-
-<style>
-.header{
-  display: flex;
-  justify-content: flex-end
-}
-</style>

@@ -18,9 +18,9 @@ Root
     * passport : passport를 이용한 사용자 인증    
     * mongo : DB에 관한 정보    
   * controller    
-    * home : before_action으로 로그인 세션 여부 체크    
-    * user : 인증 및 회원가입 절차    
-    * UserCoin : user가 등록한 코인의 수익률    
+    * home(index) : before_action으로 로그인 세션 여부 체크    
+    * user(Login, SignUp) : 인증 및 회원가입 절차    
+    * UserCoin(profile) : user가 등록한 코인의 수익률    
     * MyPage : html5 기반의 웹브라우저 알람    
     * render : partial_render로 원하는 정보만 팝업    
   * Model   
