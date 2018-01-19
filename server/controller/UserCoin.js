@@ -27,7 +27,7 @@ exports.show = function(req, res) {
       console.log("Error:", err);
     }
     else {
-      res.render("coinRead", { user:req.user, coin: coin});
+      res.render("coinRead", { user:req.user, coin: coin });
     }
   });
 };
