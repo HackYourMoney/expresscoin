@@ -1,19 +1,26 @@
-// Coin API 를 가져온다. 
-
+// crawling module import
 var cheerio = require('cheerio');  
-var request = require('request');
+var request = require('sync-request');
 
-var coinnest_data;
+
+/** 
+ * 거래소 코인 목록 반환 모듈 
+ * @returns {JSON} : '거래소이름' : 'value'
+ */
 exports.exchangeStore = function(){
     var store = {
         '코인네스트' :'coinnest',
-        '업비트': 'upbit',
-        '업비트_btc':'upbit_btc',
+        '업비트KRW': 'upbit_krw',
+        '업비트BTC':'upbit_btc',
         '빗썸' : 'bithumb',
         '코인원': 'coinone'
         }
-    return store;
-  }
+    return JSON.stringify(store);
+}
+/**
+ * 코인네스트 목록 모듈
+ * @returns {JSON} : '코인이름' : 'value'
+ */
 exports.coinnest = function(){
     var coinnest = {
         '카이버(KNC)':"knc",
@@ -34,9 +41,13 @@ exports.coinnest = function(){
           "모나코(MCO)" :  "mco",  
           "Ink(INK)" :  "ink"        
     }
-    return coinnest;
+    return JSON.stringify(coinnest);
 }
-exports.upbit_krw = function(){
+/** 
+ * 업비트 KRW 코인 목록 모듈
+ * @returns {JSON} : '코인이름' : 'value'
+ */
+exports.upbitKRW = function(){
     var upbit_krw = {
         "비트코인BTC/KRW":"KRW-BTC",     
         "퀀텀QTUM/KRW":"KRW-QTUM",
@@ -76,7 +87,12 @@ exports.upbit_krw = function(){
     }
     return upbit_krw;
 }
-exports.upbit_btc = function(){
+/**
+ * 업비트 BTC 코인 목록 모듈
+ * @returns {JSON} : '코인이름' : 'value'
+ */
+exports.upbitBTC = function(){
+    // TODO: 이름 다 추가 X 추가해야함
     var upbit_btc = {
         '이더리움BTC-ETH':'BTC-ETH',
         '리플BTC-XRP':'BTC-XRP',
@@ -199,11 +215,15 @@ exports.upbit_btc = function(){
         'BTC-VIB':'BTC-VIB',
         '파워렛져BTC-POWR':'BTC-POWR',
         '머큐리BTC-MER':'BTC-MER',
-        'BTC-BTG':'BTC-BTG',
+        '비트골드BTC-BTG':'BTC-BTG',
         'BTC-ENG':'BTC-ENG'    
     }
     return upbit_btc;
 }
+/**
+ * 빗썸 코인 목록 모듈
+ * @returns {JSON} : '코인이름' : 'value'
+ */
 exports.bithumb = function(){
     var bithumb = {
         "비트코인":"btc",     
@@ -221,6 +241,10 @@ exports.bithumb = function(){
     }
     return bithumb;
 }
+/**
+ * 코인원 코인 목록 모듈
+ * @returns {JSON} : '코인이름' : 'value'
+ */
 exports.coinone = function(){
     var coinone = {
         '비트코인':"btc",
@@ -235,98 +259,127 @@ exports.coinone = function(){
     }
     return coinone;
 }
-// exports.coinnest_getdata = function(params){
-//     // url
-//     var url = 'http://api.coinnest.co.kr/api/pub/ticker?coin='+params;  
 
-//     var callback = request( url, function (error, response, body) {
-     
-//       console.log(JSON.parse(body).last);
-     
-//       var result = ""+(JSON.parse(body).last);
-//     });
-// }
-exports.coinnest_getdata = function(params){
+/**
+ * 거래소 별 코인 현재가격 반환 모듈
+ * @param {String} : params : '코인 value'
+ * @return {String} : 'res' : '현재코인'
+ */
+
+// 코인네스트 현재 코인 가격 
+exports.coinnestCoin = function(params){
     var url = 'http://api.coinnest.co.kr/api/pub/ticker?coin='+params;  
+    var res = request('GET', url);
+    // JSON?!
+    // res = JSON.parse(res.getBody('utf8')).last;
+    // var obj = { "value" : res };
+    // return JSON.stringify(obj);
 
-    request(url,function(err,req,body){
-        coinnest_data = JSON.parse(body).last;
-    });
-    return coinnest_data;
+    res = "" + JSON.parse(res.getBody('utf8')).last;
+    return res;
 }
-exports.upbit_getdata = function(params){
 
-    if(params == nil)
-        params =" "
-    
-    url = "https://crix-api-endpoint.upbit.com/v1/crix/candles/days?code=CRIX.UPBIT."
-    url += params
-    request(url, function(error, response, data){  
-        if (error) {throw error};
+// 업비트 현재 코인 가격 
+exports.upbitCoin = function(params){
+    if(params == "nil"){
+        params ="";
+    }
+    var url = "https://crix-api-endpoint.upbit.com/v1/crix/candles/days?code=CRIX.UPBIT."+params;
+    var res = request('GET', url);
+    // res = JSON.parse(res.getBody('utf8'))[0].tradePrice;
+    // var obj = {"value": res };
+    // return JSON.stringify(obj);
 
-        result = Json.parse(data).first["tradePrice"]
-
-    });
+    res = "" + JSON.parse(res.getBody('utf8'))[0].tradePrice;
+    return res;
 }
-/*
-    def self.upbit_getdata(params)
-        puts 'upbit'
-        puts params 
-        if(params == nil)
-            params =" "
-        end
-        url = "https://crix-api-endpoint.upbit.com/v1/crix/candles/days?code=CRIX.UPBIT."
-        url += params
-        # puts url
-        data = open(url).read()
 
-        data = JSON.parse(data)
-        puts data.first["tradePrice"]
-        return data.first["tradePrice"]
-        
-    end
-     # 마켓 추가 설정
-    def self.bithumb_getdata(params)
-        puts 'bithumb'
-        puts params
-        if(params == nil)
-            params= " "
-        end
-        source = "https://api.bithumb.com/public/recent_transactions/"
-        source += params
+// 빗썸 현재 코인 가격 
+exports.bithumbCoin = function(params){
+    if(params == "nil"){
+        params ="";
+    }
+    var url = "https://api.bithumb.com/public/recent_transactions/" + params;
+    var res = request('GET', url);
+    // res = JSON.parse(res.getBody('utf8')).data[0].price;
+    // var obj = {"value": res };
+    // return JSON.stringify(obj);
 
-        data = JSON.parse(open(source).read())
-        return data["data"][0]["price"]
-    end
-    def self.coinone_getdata(params)
-        puts 'coinone'
-        puts params
-        if(params == nil)
-            params= " "
-        end
-        source = "https://api.coinone.co.kr/ticker?currency="
-        source +=params
-        data = open(source).read()
-        result = JSON.parse(data)
-        return result["last"]
+    res = "" + JSON.parse(res.getBody('utf8')).data[0].price;
+    return res;
+}
 
-    end
+// 코인원 현재 코인 가격 
+exports.coinoneCoin = function(params){
+    if(params == "nil"){
+        params ="";
+    }
+    var url = "https://api.coinone.co.kr/ticker?currency=" + params;
+    var res = request('GET', url);
+    // res = JSON.parse(res.getBody('utf8')).last;
+    // var obj = {"value": res };
+    // return JSON.stringify(obj);;
 
-    def self.coin_result(buy,now)
-   
-        value = (((now.to_f)/(buy.to_f))-1)*100
-        return value.round(2)
-    end
+    res = "" + JSON.parse(res.getBody('utf8')).last;
+    return res;
+}
 
-    def self.coin_price(deposit,price)
-        # puts "coin_price"
-        # puts deposit
-        # puts price
-        # puts ((deposit.to_f)*(price.to_f))*deposit.to_f/100.0
-        result = (deposit.to_f)+((deposit.to_f)*(price.to_f))/100.0
-        
-        return result.round(2)
-    end
+/**
+ * 코인 투자 수익률 반환 모듈 
+ * @param {String,String} : buy : 내가 산 코인 가격, now : 현재 코인 가격 
+ * @return {String} : 수익률
+ */
+exports.percent = function(buy,now){
+    value = (((parseFloat(now)/(parseFloat(buy))-1)*100));
+    return ""+Math.round(value * 100) / 100
+}
+/**
+ * 투자금 현재 평가 가격
+ * @param {String,String} : deposit : 투입금액 , percent : 수익률 
+ * @return {String} : 현재 평가 금액 
+ */ 
+exports.coin_price = function(deposit,percent){
+    value = (parseFloat(deposit))+(parseFloat(deposit))*(parseFloat(percent))/100.0
+    return ""+Math.round(value * 100) / 100
+}
+
+/**
+ * 현재 코인 상태
+ * @param {String,String,String,String} 
+ * : buycoin : 산가격 , deposit : 넣은금액, category: 거래소, coinname: 코인이름 
+ * @return {JSON} : 
+ * : category: 카테고리, coinname: 코인이름, buycoin : 내가 산 코인 가격
+ * : nowcoin: 현재코인가격 , deposit: 입금금액 ,nowdeposit: 현재금액,
+ * : percent: 수익률, present : 평가금액
+ */ 
+exports.coinstatus = function(buycoin,deposit,category,coinname){
     
-end
-*/
+    // 현재 코인 가격  
+    var nowcoin = '';
+    if(category == "coinnest")
+        nowcoin= this.coinnestCoin(coinname);
+    else if(category == "upbit_krw" || "ubpit_btc")
+        nowcoin = upbitCoin();
+    else if(category == "bithumb")
+        nowcoin = bithumbCoin();
+    else if(category == "coinone")
+        nowcoin = coinoneCoin();
+    
+    // 수익률
+    var percent = this.percent(buycoin,nowcoin);
+    // 현재 금액 
+    var present = this.coin_price(deposit,percent);
+
+    var result = {
+        category : category,
+        coinname : coinname,
+        buycoin : buycoin,
+        nowcoin : nowcoin,
+        deposit : deposit,
+        nowdeposit : present-deposit,
+        percent : percent,
+        present : present
+    };
+
+    return JSON.stringify(result);
+}
