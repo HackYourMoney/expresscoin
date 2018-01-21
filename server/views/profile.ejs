@@ -34,10 +34,10 @@
         <tbody>
           <% for(var i=0;i<coins.length;i++) { %>
           <tr>
-            <td><%= coins[i].exchange %></td>
-            <td><a href="/coinRead/<%= coins[i]._id%>"><%= coins[i].coinname %></a></td>
-            <td><%= coins[i].purchase %></td>
-            <td id="totalcoin"><%= coins[i].deposit %></td>
+            <td class="exchange"><%= coins[i].exchange %></td>
+            <td class="coinname"><a href="/coinRead/<%= coins[i]._id%>"><%= coins[i].coinname %></a></td>
+            <td class="purchase"><%= coins[i].purchase %></td>
+            <td class="deposit"><%= coins[i].deposit %></td>
           </tr>
           <% } %>
         </tbody>
@@ -100,22 +100,39 @@
     var n = new Notification(theTitle,options);
   }
 
+  // 숫자 자릿수 표시 함수
+  function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   // 입금 총액
   var totalInput = 0;
   for (var i=1;i<document.getElementById('cointable').rows.length;i++) {
-    totalInput += parseInt(document.getElementById("totalcoin").innerHTML);
+    totalInput += parseInt(document.getElementsByClassName("deposit").innerHTML);
   }
-  document.getElementById("totalInput").innerHTML = totalInput;
+  document.getElementById("totalInput").innerHTML = numberWithCommas(totalInput);
 
   // 현재 총액 : API 반영 예정
   var totalNow = 0;
-  document.getElementById("totalNow").innerHTML = totalNow;
+  document.getElementById("totalNow").innerHTML = numberWithCommas(totalNow);
 
   // 순 수익
   var getMoney = totalNow - totalInput;
-  document.getElementById("getMoney").innerHTML = getMoney;
+  document.getElementById("getMoney").innerHTML = numberWithCommas(getMoney);
 
   // 수익률
   var getMoneyRate = getMoney/100;
-  document.getElementById("getMoneyRate").innerHTML = getMoneyRate;
+  document.getElementById("getMoneyRate").innerHTML = numberWithCommas(getMoneyRate);
+
+  function total_value(params){
+    sum = 0 ;
+    for(i = 0 ; i <params.length;i++){
+      console.log(numberWithoutCommas(params[i].innerHTML.slice(0,-1)));
+      sum += parseInt(numberWithoutCommas(params[i].innerHTML.slice(0,-1)));
+    }
+    return sum;
+  }
+  function numberWithoutCommas(x){
+    return parseInt(x.replace(/,/g,""));
+  }
 </script>

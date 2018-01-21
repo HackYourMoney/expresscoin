@@ -1,4 +1,7 @@
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
+<!-- BootStrap 4.0 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <style>
   html,body{
     height:100%;
@@ -11,9 +14,21 @@
 
   .header {
     display: flex;
-    justify-content: flex-end
+    justify-content: flex-end;
+    position: fixed-right;
+    top: 0;
+    background-color: aquamarine;
   }
 
+  .header li {
+    float: right;
+  }
+
+  .header li a {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+  }
   result {
     display: flex;
     justify-content: flex-end;
