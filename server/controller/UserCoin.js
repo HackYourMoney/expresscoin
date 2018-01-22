@@ -11,10 +11,6 @@ exports.list = function(req, res) {
       res.render("profile", {
          coins: coins,
          user:req.user
-        //  totalInput: totalInput,
-        //  totalNow: totalNow,
-        //  getMoney: getMoney,
-        //  getMoneyRate: getMoneyRate
       });
     }
   });
@@ -86,19 +82,3 @@ exports.delete = function(req, res) {
     }
   });
 };
-
-
-// // 입금 총액
-// var totalInput = 0;
-// var totalcoin = Coin.find({}).exec(function(err, total) {
-//   for (var i=0;i<Coin.length;i++) {
-//     // 입금 총액
-//     totalInput += total[i].deposit;
-//   };
-// });
-// // 현재 총액 : API 반영 예정
-// var totalNow = 0;
-// // 순 수익
-// var getMoney = totalNow - totalInput;
-// // 수익률
-// var getMoneyRate = getMoney/100;

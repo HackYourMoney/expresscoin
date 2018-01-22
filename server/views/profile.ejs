@@ -41,7 +41,7 @@
             <td class="totalNow"><%= %></td>
             <td class="getMoney"><%= %></td>
             <td class="getMoneyRate"><%= %></td>
-            <td><a href="">삭제</a></td>
+            <td><a data-confirm="삭제하시겠습니까?" rel="nofollow" data-method="delete" href="/delete/<%=coins[i]._id%>">삭제</a></td>
           </tr>
           <% } %>
         </tbody>
@@ -115,9 +115,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // 현재 총액 : API 반영 예정
   var totalNow = 0;
-  // for (i*0;i<(document.getElementById("cointable").rows.length)-1;i++) {
-  //   totalNow += parseInt(document.getElementsByClassName("totalNow")[i].innerHTML);
-  // }
+  for (i*0;i<(document.getElementById("cointable").rows.length)-1;i++) {
+    totalNow += parseInt(document.getElementsByClassName("totalNow")[i].innerHTML);
+  }
   document.getElementById("totalNow").innerHTML = "현재 총액 : "+ numberWithCommas(totalNow);
 
   // 순 수익
