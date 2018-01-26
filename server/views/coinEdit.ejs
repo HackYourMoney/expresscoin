@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ./stylesheet/stylesheet %>
+  <title>코인 수정</title>
+</head>
+<body>
+  <% include header %>
+  <div class="container">
+    <h3><a href="/profile">전체 보기</a></h3>
+    <h1>코인 수정</h1>
+    <form action="/coinUpdate/<%= coin._id %>" method="post">
+    <table>
+      <tbody>
+        <tr>
+          <td>거래소</td>
+          <td>
+            <select name="exchange" value="<%= coin.exchange %>">
+              <option value="bitthumb">빗썸</option>
+              <option value="Upbit">업비트</option>
+              <option value="coinNest">코인네스트</option>
+              <option value="coinOne">코인원</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>코인이름</td>
+          <td><input type="text" name="coinname" value="<%= coin.coinname %>"></td>
+        </tr>
+        <tr>
+          <td>매입가</td>
+          <td><input type="text" name="purchase" value="<%= coin.purchase %>"></td>
+        </tr>
+        <tr>
+          <td>입금액</td>
+          <td><input type="number" name="deposit" value="<%= coin.deposit %>"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><button type="submit">수정</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  </div>
+</body>
+</html>

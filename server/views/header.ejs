@@ -1,10 +1,9 @@
-<% include ./StyleSheet/stylesheet %>
 <div class="header">
-  <% if (!user) { %>
-    <a class="btn btn-default" href="/signup">회원 가입</a>
-    <a class="btn btn-default" href="/login">로그인</a>
-  <% } else { %>
-    <i class="btn btn-default"> <%= user.local.email %> 님 환영합니다 </i>
-    <a class="btn btn-default" href="/logout">로그아웃</a>
-  <% } %>
+  <%# if (!user) { %>
+    <li><a class="btn btn-default" href="/signup">회원 가입</a></li>
+    <li><a class="btn btn-default" href="/login">로그인</a></li>
+  <%# } else { %>
+    <li><i class="btn btn-default"> <%#= user.local.email %> 님 환영합니다 </i></li>
+    <li><a class="btn btn-default" href="/logout">로그아웃</a></li>
+  <%# } %>
 </div>

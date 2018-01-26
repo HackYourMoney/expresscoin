@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ./stylesheet/stylesheet %>
+  <title>코인 확인</title>
+</head>
+<body>
+  <% include header %>
+  <div class="container">
+    <h3><a href="/profile">전체 보기</a></h3>
+    <h1>코인 정보</h1>
+    <table>
+      <tbody>
+        <tr>
+          <td>거래소</td>
+          <td>:</td>
+          <td><%= coin.exchange %></td>
+        </tr>
+        <tr>
+          <td>코인명</td>
+          <td>:</td>
+          <td><%= coin.coinname %></td>
+        </tr>
+        <tr>
+          <td>구매가</td>
+          <td>:</td>
+          <td><%= coin.purchase %></td>
+        </tr>
+        <tr>
+          <td>입액</td>
+          <td>:</td>
+          <td><%= coin.deposit %></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3><a href="/coinEdit/<%= coin._id %>">수정</a></h3>
+    <form action="/delete/<%= coin._id %>" method="post">
+      <button type="submit">삭제</button>
+    </form>
+  </div>
+</body>
+</html>
