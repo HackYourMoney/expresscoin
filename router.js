@@ -5,6 +5,7 @@ var session = require('express-session');
 var users = require('./server/controller/user');
 var home = require('./server/controller/home');
 var usercoin = require('./server/controller/UserCoin');
+var mypage = require('./server/controller/MyPage')
 
 var session = require('express-session');
 var router = express.Router();
@@ -36,9 +37,9 @@ router.post('/signup',passport.authenticate('signup', {
   failureFlash : true,
 }));
 
-// profile
-router.get('/profile', home.isLoggedIn, function(req, res, next) {
-  res.render('profile', { user : req.user });
+// mypage
+router.get('/mypage', mypage.swCheck, function(req, res, next) {
+  res.render('mypage', { user : req.user });
 });
 
 // Logout

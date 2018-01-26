@@ -4,9 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+var index = require('./router');
+
 var mongoose = require('mongoose');
 var passport = require('passport');
-// mongo 관련 모듈 추가
+// mongo 관련 모듈 추가 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
@@ -15,12 +18,16 @@ var flash = require("connect-flash");
 
 var app = express();
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'ejs');
 
-// 몽고 db 설정
-// 데이터 베이스 구성한 것 연결
+// 서비스워커 설정
+app.use('/config', express.static(__dirname + "/server/config"));
+
+// 몽고 db 설정 
+// 데이터 베이스 구성한 것 연결 
 var config = require('./server/config/Mongo.js');
 mongoose.connect(config.url);
 mongoose.connection.on('error',function(){
@@ -49,17 +56,20 @@ app.use(session({
   resave: true,
   //store session on MongoDB using express-session + connect mongo
   store: new MongoStore({
-    url: config.url,
-    collection : 'sessions'
+      url: config.url,
+      collection : 'sessions'
   })
 }));
 
-// passport url
+// passport url 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+
 app.use('/', index);
+// app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
