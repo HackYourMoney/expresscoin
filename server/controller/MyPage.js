@@ -20,10 +20,6 @@
 /* eslint-env browser, es6 */
 
 'use strict';
-var jsdom = require('jsdom');
-var JSDOM = jsdom.JSDOM;
-
-global.document = new JSDOM(html).window.document;
 
 exports.swCheck = function() {
 
