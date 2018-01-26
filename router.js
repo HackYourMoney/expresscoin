@@ -5,6 +5,7 @@ var session = require('express-session');
 var users = require('./server/controller/user');
 var home = require('./server/controller/home');
 var usercoin = require('./server/controller/UserCoin');
+var mypage = require('./server/controller/MyPage')
 
 var router = express.Router();
 
@@ -34,6 +35,11 @@ router.post('/signup',passport.authenticate('signup', {
   failureRedirect : '/signup',
   failureFlash : true,
 }));
+
+// mypage
+router.get('/mypage', mypage.swCheck, function(req, res, next) {
+  res.render('mypage', { user : req.user });
+});
 
 // Logout
 router.get('/logout', function(req, res) {
