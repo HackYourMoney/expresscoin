@@ -1,25 +1,26 @@
 var express = require('express');
 var passport = require('passport');
+var session = require('express-session');
 
 var users = require('./server/controller/user');
 var home = require('./server/controller/home');
 var usercoin = require('./server/controller/UserCoin');
+var mypage = require('./server/controller/MyPage')
 
-var session = require('express-session');
 var router = express.Router();
 
-// GET home page.
+// GET home page
 router.get('/',home.signin, function(req, res, next) {
-  res.render('index', { title: 'Expresscoin', user: req.user });
+  res.render('index', { user: req.user });
 });
 
 // Get Login
 router.get('/login',home.signin,function(req, res, next) {
-  res.render('login', { title: '로그인', message: req.flash('loginMessage'),user : req.user });
+  res.render('login', { message: req.flash('loginMessage'),user : req.user });
 });
 // Get SignUp
 router.get('/signup',home.signin,function(req, res, next) {
-  res.render('signup', { title: '회원가입', message: req.flash('signupMessage'),user : req.user });
+  res.render('signup', { message: req.flash('signupMessage'),user : req.user });
 });
 
 // Post Login
@@ -35,15 +36,50 @@ router.post('/signup',passport.authenticate('signup', {
   failureFlash : true,
 }));
 
-// profile
-router.get('/profile', home.isLoggedIn, function(req, res, next) {
-  res.render('profile', { user : req.user });
+// mypage
+router.get('/mypage', mypage.swCheck, function(req, res, next) {
+  res.render('mypage', { user : req.user });
 });
 
 // Logout
 router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
+});
+// 회원 탈퇴
+router.post('/Signout', function(req, res) {
+  res.redirect('/');
+});
+
+// MyPage && 코인 보기
+router.get('/profile', home.isLoggedIn, function(req, res, next) {
+  usercoin.list(req,res);
+});
+
+// 코인 등록
+router.get('/coinRegister', function(req, res) {
+  usercoin.create(req,res);
+});
+router.post('/save', function(req,res) {
+  usercoin.save(req,res);
+});
+
+// 코인 확인
+router.get('/coinRead/:id', function(req, res) {
+  usercoin.show(req, res);
+});
+
+// 코인 수정
+router.get('/coinEdit/:id', function(req, res) {
+  usercoin.edit(req, res);
+});
+router.post('/coinUpdate/:id', function(req, res) {
+  usercoin.update(req, res);
+});
+
+// 코인 삭제
+router.post('/delete/:id', function(req, res) {
+  usercoin.delete(req, res);
 });
 
 

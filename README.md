@@ -37,4 +37,11 @@ Root
 * app.js    
 * Package.json    
 
+> header 페이지를 include가 아닌 render로 바꿔야함    
+> CSS   
+
 ## **변경사항 생기면 그때 그때 push 및 commit!!**
+
+> 참조    
+[MongoDB 자료형](https://www.tutorialspoint.com/mongodb/mongodb_datatype.htm)    
+[Mongoose Schema Data Type](http://mongoosejs.com/docs/guide.html)
