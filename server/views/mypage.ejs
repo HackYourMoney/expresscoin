@@ -7,16 +7,13 @@
   <% include header %>
   <div class="container">
 
-    <header>
-      <h1>Push Codelab</h1>
-    </header>
-  
-    <main>
-      <p>Welcome to the push messaging codelab. The button below needs to be
-      fixed to support subscribing to push.</p>
+    <h1>expressCoin zonberZone</h1>
+    
+    <div>
+      <p>내 코인의 시세 변경을 알람으로 받겠습니다.</p>
       <p>
-        <button disabled class="js-push-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-          Enable Push Messaging
+        <button disabled class="js-push-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect push_enrolled_chk">
+          푸시알람 설정하기
         </button>
       </p>
       <section class="subscription-details js-subscription-details is-invisible">
@@ -29,11 +26,123 @@
         server keys on the site - so make sure they match.</p>
         <pre><code class="js-subscription-json"></code></pre>
       </section>
-    </main>
+    </div>
 
     </div>
     <script src="/config/sw.js"></script>
-    <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-    
+    <script>
+      $(document).ready(function() {
+
+        pushButton = document.querySelector('.push_enrolled_chk');
+
+        let isSubscribed = false;
+        let swRegistration = null;
+
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+          console.log('Service Worker and Push is supported');
+
+          navigator.serviceWorker.register('/config/sw.js')
+          .then(function(swReg) {
+            console.log('서비스워커가 정상적으로 등록되었습니다.', swReg);
+
+            swRegistration = swReg;
+            initialiseUI();
+          })
+          .catch(function(error) {
+            console.error('서비스워커 등록과정에서 에러가 발생하였습니다.', error);
+          });
+        } else {
+          console.warn('푸시메시지가 지원되지 않는 브라우저입니다.');
+          //앨러트 띄우기 01.26
+        }
+
+        function initialiseUI() {
+          //클릭 리스너
+          pushButton.addEventListener('click', function() {
+            pushButton.disabled = true;
+            if (isSubscribed) {
+              // TODO: Unsubscribe user
+            } else {
+              subscribeUser();
+            }
+          });
+          // Set the initial subscription value
+          swRegistration.pushManager.getSubscription()
+          .then(function(subscription) {
+            isSubscribed = !(subscription === null);
+
+            if (isSubscribed) {
+              console.log('현재 서비스워커 등록에 동의한 유저입니다.');
+            } else {
+              console.log('서비스워커 등록에 동의하지 않은 유저입니다.');
+            }
+
+            updateBtn();
+          });
+        }
+
+        function updateBtn() {
+          if (isSubscribed) {
+            pushButton.textContent = '푸시 메시지 알람을 받지 않겠습니다.';
+          } else {
+            pushButton.textContent = '푸시 메시지 알람을 받겠습니다.';
+          }
+
+          pushButton.disabled = false;
+        }
+
+        function subscribeUser() {
+          const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+          swRegistration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: applicationServerKey
+          })
+          .then(function(subscription) {
+            console.log('User is subscribed:', subscription);
+
+            updateSubscriptionOnServer(subscription);
+
+            isSubscribed = true;
+
+            updateBtn();
+          })
+          .catch(function(err) {
+            console.log('Failed to subscribe the user: ', err);
+            updateBtn();
+          });
+        }
+
+        function urlB64ToUint8Array(base64String) {
+          const padding = '='.repeat((4 - base64String.length % 4) % 4);
+          const base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/');
+
+          const rawData = window.atob(base64);
+          const outputArray = new Uint8Array(rawData.length);
+
+          for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+          }
+          return outputArray;
+        }
+
+        function updateSubscriptionOnServer(subscription) {
+          // TODO: Send subscription to application server
+
+          const subscriptionJson = document.querySelector('.js-subscription-json');
+          const subscriptionDetails =
+            document.querySelector('.js-subscription-details');
+
+          if (subscription) {
+            subscriptionJson.textContent = JSON.stringify(subscription);
+            subscriptionDetails.classList.remove('is-invisible');
+          } else {
+            subscriptionDetails.classList.add('is-invisible');
+          }
+        }
+
+      });
+    </script>
   </body>
   </html>

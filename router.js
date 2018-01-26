@@ -37,7 +37,8 @@ router.post('/signup',passport.authenticate('signup', {
 }));
 
 // mypage
-router.get('/mypage', mypage.swCheck, function(req, res, next) {
+router.get('/mypage', function(req, res, next) {
+  const applicationServerPublicKey = 'BNAsKl9dL8E3B26ZnPorQVGq--NymrrVC6VBZYjwBCex-xz_3QVMLPGAGXGbcWbTnjk0wQANh4pchjz6ccMgg2w';
   res.render('mypage', { user : req.user });
 });
 
