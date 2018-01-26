@@ -25,9 +25,9 @@ self.addEventListener('push', function(event) {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
   
-    const title = 'Push Codelab';
+    const title = '지옥에 간 코인의 시세입니다.';
     const options = {
-      body: '와 푸시메시지 개어려워.',
+      body: '당신의 코인은 지옥에 갈 것입니다. 잘 지켜보세요',
       icon: 'images/icon.png',
       badge: 'images/badge.png'
     };
