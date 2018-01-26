@@ -2,6 +2,7 @@
 <html>
 <head>
   <% include ./StyleSheet/stylesheet %>
+  <title>로그인</title>
 </head>
 <body>
   <% include header %>
@@ -14,7 +15,6 @@
       <strong>Ohps!</strong> <%= message %>
     </div>
     <% } %>
-    <h2><%= title %></h2>
     <div class="login-form">
       <form action="/login" method="post">
         <label>이메일</label>
