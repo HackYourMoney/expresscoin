@@ -11,7 +11,7 @@ var router = express.Router();
 
 // GET home page
 router.get('/',home.signin, function(req, res, next) {
-  res.render('index', { user: req.user });
+  res.render('index.ejs', { user: req.user });
 });
 
 // Get Login
@@ -38,8 +38,8 @@ router.post('/signup',passport.authenticate('signup', {
 
 // mypage
 router.get('/mypage', function(req, res, next) {
-  const applicationServerPublicKey = 'BNAsKl9dL8E3B26ZnPorQVGq--NymrrVC6VBZYjwBCex-xz_3QVMLPGAGXGbcWbTnjk0wQANh4pchjz6ccMgg2w';
-  res.render('mypage', { user : req.user });
+  const applicationServerPublicKey_created = 'BNAsKl9dL8E3B26ZnPorQVGq--NymrrVC6VBZYjwBCex-xz_3QVMLPGAGXGbcWbTnjk0wQANh4pchjz6ccMgg2w';
+  res.render('mypage', { user : req.user, applicationServerPublicKey });
 });
 
 // Logout
