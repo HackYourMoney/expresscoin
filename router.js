@@ -4,7 +4,6 @@ var session = require('express-session');
 
 var users = require('./server/controller/user');
 var home = require('./server/controller/home');
-var usercoin = require('./server/controller/UserCoin');
 
 var router = express.Router();
 
@@ -47,33 +46,33 @@ router.post('/Signout', function(req, res) {
 
 // MyPage && 코인 보기
 router.get('/profile', home.isLoggedIn, function(req, res, next) {
-  usercoin.list(req,res);
+  users.list(req,res);
 });
 
 // 코인 등록
 router.get('/coinRegister', function(req, res) {
-  usercoin.create(req,res);
+  users.create(req,res);
 });
 router.post('/save', function(req,res) {
-  usercoin.save(req,res);
+  users.save(req,res);
 });
 
 // 코인 확인
 router.get('/coinRead/:id', function(req, res) {
-  usercoin.show(req, res);
+  users.show(req, res);
 });
 
 // 코인 수정
 router.get('/coinEdit/:id', function(req, res) {
-  usercoin.edit(req, res);
+  users.edit(req, res);
 });
 router.post('/coinUpdate/:id', function(req, res) {
-  usercoin.update(req, res);
+  users.update(req, res);
 });
 
 // 코인 삭제
 router.post('/delete/:id', function(req, res) {
-  usercoin.delete(req, res);
+  users.delete(req, res);
 });
 
 

@@ -1,0 +1,86 @@
+var mongoose = require('mongoose');
+var Coin = require('../Model/coin.js');
+
+// show all coin
+exports.list = function(req, res) {
+  // email이 세션에 저장된 email로
+  // DB table join
+  Coin.find({}).populate('user').exec(function (err, coins) { // (에러와, DB의 결과)
+    if (err) {
+      console.log("Error:", err);
+    }
+    else {
+      res.render("profile", {
+         coins: coins,
+         user:req.user
+      });
+    }
+  });
+};
+
+// show one coin
+exports.show = function(req, res) {
+  Coin.findOne({_id: req.params.id}).exec(function (err, coin) {
+    if (err) {
+      console.log("Error:", err);
+    }
+    else {
+      res.render("coinRead", { user:req.user, coin: coin });
+    }
+  });
+};
+
+// Crteate coin
+exports.create = function(req, res) {
+  res.render("coinRegister", {user:req.user});
+};
+
+exports.save = function(req, res) {
+  var coin = new Coin(req.body);
+  coin.save(function(err) {
+    if(err) {
+      console.log(err);
+      res.render("coinRegister", {user:req.user});
+    } else {
+      console.log('코인 등록 성공');
+      res.redirect("/coinRead/"+coin._id);
+    }
+  });
+}
+
+// Edit coin
+exports.edit = function(req, res) {
+  Coin.findOne({_id: req.params.id}).exec(function (err, coin) {
+    if (err) {
+      console.log("Error:", err);
+    }
+    else {
+      res.render("coinEdit", {user:req.user, coin: coin});
+    }
+  });
+};
+
+exports.update = function(req, res) {
+  Coin.findByIdAndUpdate(req.params.id, { $set: { exchange: req.body.exchange, coinname: req.body.coinname, purchase:req.body.purchase, deposit:req.body.deposit }}, { new: true }, function (err, coin) {
+    if (err) {
+      console.log(err);
+      res.render("coinEdit", {user:req.user, coin: req.body});
+    } else {
+      console.log("코인 수정 완료");
+      res.redirect("/coinRead/"+coin._id);
+    }
+  });
+};
+
+// Delete Coin
+exports.delete = function(req, res) {
+  Coin.remove({_id: req.params.id}, function(err) {
+    if(err) {
+      console.log(err);
+    }
+    else {
+      console.log("코인 삭제 완료");
+      res.redirect("/profile");
+    }
+  });
+};

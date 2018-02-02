@@ -11,13 +11,14 @@
     width: 50%;
     margin: 2% 0%;
   }
-
   .header {
+    overflow: hidden;
     display: flex;
     justify-content: flex-end;
     position: fixed-right;
     top: 0;
     background-color: aquamarine;
+    width: 100%;
   }
 
   .header li {
@@ -25,10 +26,18 @@
   }
 
   .header li a {
+    float:left;
+    display: block;
     text-align: center;
     text-decoration: none;
+    color: red;
+  }
+
+  .header a:hover {
+    background: yellow;
     color: black;
   }
+
   result {
     display: flex;
     justify-content: flex-end;
@@ -89,8 +98,10 @@
     width: 100%;
   }
 
-  .container table tr td {
-    padding: 5px;
+  .container table tr td, th {
+    text-align: center;
+    margin: auto;
+    padding: 3px;
   }
 
   .container table tr td input, .container table tr td textarea {

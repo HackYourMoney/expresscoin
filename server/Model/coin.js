@@ -2,6 +2,10 @@
 var mongoose = require('mongoose');
 
 var usercoinSchema = mongoose.Schema({
+    // usercoin의 id 차용
+    user: {
+      ref: 'usercoin'
+    },
     exchange : String,  // 거래소
     coinname : String,  // 코인 이름
     purchase : Number,  // 코인 구매가

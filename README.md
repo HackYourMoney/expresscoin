@@ -39,6 +39,8 @@ Root
 
 > header 페이지를 include가 아닌 render로 바꿔야함    
 > CSS   
+> AWS or Azure Deloy
+> DB 1:N
 
 ## **변경사항 생기면 그때 그때 push 및 commit!!**
 

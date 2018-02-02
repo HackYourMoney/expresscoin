@@ -35,19 +35,21 @@
           <tr>
             <td class="exchange"><%= coins[i].exchange %></td>
             <td class="coinname"><a href="/coinRead/<%= coins[i]._id%>"><%= coins[i].coinname %></a></td>
-            <td class="purchase"><%= coins[i].purchase %></td>
+            <td class="purchase" style="text-align:left; text-indent:2px"><%= coins[i].purchase %></td>
             <td class="deposit"><%= coins[i].deposit %></td>
-            <td class="totalinput"><%= %></td>
-            <td class="totalNow"><%= %></td>
-            <td class="getMoney"><%= %></td>
-            <td class="getMoneyRate"><%= %></td>
-            <td><a data-confirm="삭제하시겠습니까?" rel="nofollow" data-method="delete" href="/delete/<%=coins[i]._id%>">삭제</a></td>
+            <td class="totalinput"></td>
+            <td class="totalNow"></td>
+            <td class="getMoney"></td>
+            <td class="getMoneyRate"></td>
+            <td><form action="/delete/<%= coins[i]._id %>" method="post">
+              <button type="submit">삭제</button>
+            </form></td>
           </tr>
           <% } %>
         </tbody>
       </table>
     <% } else { %>
-      <div>등록된 코인이 없습니다</div>
+      <div style="text-align:center">등록된 코인이 없습니다</div>
     <% } %>
     </div>
     <div class="result">
@@ -64,8 +66,6 @@
 </html>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-
   function notifyMe() {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log(theBody,theIcon,theTitle);
     var n = new Notification(theTitle,options);
   }
-
+document.addEventListener("DOMContentLoaded", function() {
   // 입금 총액
   var totalInput = 0;
   for (i=0;i<(document.getElementById("cointable").rows.length)-1;i++) {
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
   for(i=0;i<SellArr.length;i++){
     for(j=0;j<(document.getElementById("cointable").rows.length)-1;j++){
       NoComma = parseInt(document.getElementsByClassName(SellArr[i])[j].innerHTML);
-      document.getElementsByClassName(SellArr[i])[j].innerHTML = numberWithCommas(NoComma);
+      document.getElementsByClassName(SellArr[i])[j].innerHTML = numberWithCommas(NoComma)+"원";
     }
   }
 
